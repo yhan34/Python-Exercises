@@ -102,6 +102,35 @@ def str_even(str_old):
             
 print(str_even("Hello!"))
 
+##### problem 12
+# Write a program to count the occurences of each word in a given sentense. 
+
+def word_cnt (pystr):
+    # convert all characters into lower case
+    lower = pystr.lower()
+    # remove all the punctuation remarks
+    punctuation = ".,!?'\":;-"
+    no_punct = ""
+    for char in lower:
+        if char not in punctuation:
+            no_punct += char
+    # split the sentense into words
+    words_list = no_punct.split(" ")
+    # count occurance
+    words_unique = []
+    cnt_unique = []
+    for word in words_list:
+        if word not in words_unique:
+            words_unique.append(word)
+            cnt_unique.append(1)
+        else:
+            i = words_unique.index(word)
+            cnt_unique[i] +=1
+    return dict( zip(words_unique, cnt_unique) )
+
+st = "Hello, my name is Tom. What is your name?"
+print( word_cnt(st) )
+
 ##### problem 13
 # write a program that takes input from the user and display that in upper
 # and lowever cases
@@ -109,6 +138,34 @@ info = input("Please enter a string:")
 upper = info.upper()
 lower = info.lower()
 print("Original: {} \n Upper Case: {} \n Lower Case: {}".format(info, upper, lower))
+
+##### problem 14
+# write a program which accept a comma seperated sequence of words as input and prints the unique words in sorted form (alphanumerically).
+def words_sort1 (words_str):
+    words_list = words_str.split(", ")
+    # obtain a list of unique words
+    words_unique = []
+    for word in words_list:
+        if word not in words_unique:
+            words_unique.append(word)
+    # sort the unique words alphanumerically and return it
+    return sorted(words_unique)
+
+def words_sort2 (words_str):
+    words_list = words_str.split(", ")
+    # obtain a list of unique words
+    words_unique = list( set(words_list) )
+    # sort the unique words alphanumerically and return it
+    return sorted(words_unique)
+    
+pystr = "red, white, black, red, green, black"
+print( words_sort1(pystr) )
+
+##### problem 15
+# write a program to crete the HTML string with tags around the words.
+# sample: add_tags("b", "Python") Result: "<b>Python</b>"
+def add_tags1 (str1, str2):
+    return "<%s>%s</%s>"%(str1, str2, str1)
 
 ##### problem 16
 # write a python function to insert a string in the middle of a string
@@ -142,9 +199,8 @@ print( first_three("ipy") )
 print( first_three("python") )
 
 #### problem 19
-# Q: write a python program to get the last part of a string before a specified 
-# character. 
-# Methods and Functions: str.split(), str.rsplit(), str.join()
+# Q: write a python program to get the last part of a string before a specified character. 
+# Methods and Functions: str.split(), str.rsplit(), list.join(), str.partition(), str.rpartition()
 def str_before_chr(s, c):
     '''
     s: a string
@@ -182,17 +238,13 @@ print( reverse4(str1) )
 "".join(reversed(str1))        
 
 #### problem 21
-# Q: write a python function to convert a string to all uppercases if it contains
-# at lease 2 uppercase characters in the first 4 characters. 
-# Methods and Functions: str.upper(), str.isupper()
+# Q: write a python function to convert a string to all uppercases if it contains at lease 2 uppercase characters in the first 4 characters. 
+# Methods and Functions: str.upper(), str.isupper(), sum()
 def convert_upper(s):
-    
-    count = 0
-    for letter in s[0:4]:
-        if letter.isupper():
-            count +=1
-    
-    if count >=2:
+    # count the number of uppercase characters in the first 4 chrs
+    cnt = sum( s[0:4].isupper() )
+    # conditions
+    if cnt >=2:
         return s.upper()
     else:
         return s
@@ -207,7 +259,7 @@ print( convert_upper(str2) )
 # Q: write a python program to sort a string lexicographically
 # Methods and Functions: sorted(iterable, key, reverse), str.join()
 def lexicographical(str1):
-    return "".join(sorted(str1))       
+    return "".join(sorted(str1)) 
     
 # Test Case
 PyStr = "dfeE42"
@@ -239,10 +291,19 @@ startwith("Hello!", "H")
 # Alternative method
 "Hello".startswith("Hell")
 
-#### problem 28 Edit Later
-# Q: write a python program to add a prefix text to all the lines in a string
+#### problem 27 
+# Q: write a program to remove existing indentation from all of the lines in a given text.
+def indent_remove (pystr):
+    return "".join( pystr.split("\t") )
 
-def prefix_line(PyStr, prefix):
+pystr = "This is the 1st line. \tThis is the 2nd line."
+print( pystr )
+print( indent_remove(pystr) )
+
+#### problem 28 
+# Q: write a python program to add a prefix text to all the lines in a string
+# Method: str.replace()
+def prefix_line1 (PyStr, prefix):
     
     PyList = PyStr.split('\n')
     
@@ -251,19 +312,46 @@ def prefix_line(PyStr, prefix):
         
     return "\n".join(PyList)
 
+def prefix_line2 (pystr, prefix):
+    return pystr.replace("\n", "\n" + prefix)
+
 # Test Case
 PyStr = "This is the 1st line.\nThis is the 2nd line.\nThis is the 3rd line."
-print( prefix_line(PyStr, "Alex says: ") )
+print( prefix_line1(PyStr, "Alex says: ") )
+
+#### problem 29
+# Q: write a program to set the indentation after the first line.
+# Method: str.replace()
+def set_indent (pystr):
+    return pystr.replace("\n", "\n\t")
+
+# test case
+pystr = "This is the 1st line.\nThis is the 2nd line.\nThis is the 3rd line."
+print( set_indent(pystr) )
 
 #### problem 30 Edit
 # write a python program to print the following floating numbers upto 2 decimals.
 PyFloat = 10/3
 print( round(PyFloat, 2) )
 
-
 #### problem 38
 # Q: write a program to count occurance of a substring 
-# Method and Function: str.count()
+# Method and Function: str.count(substring, start, end)
+def substr_count (orgstr, substr):
+    if len(substr) > len(orgstr):
+        raise TypeError("The length of the substring should be smaller than the original string.")
+    count = 0
+    for i in range(len(orgstr)-len(substr)+1):
+        if orgstr[i:i+len(substr)] == substr:
+          count += 1
+    return count
+
+# Test Case
+pystr = "abcabcababa"
+print( substr_count(pystr, "ab") )
+print( substr_count(pystr, "aba") ) # 2
+print( pystr.count("aba"))          # 1
+    
 PyStr = "Learn Python the hard way."
 print( PyStr.count("a") )
 print( PyStr.count("Python") )
@@ -271,26 +359,33 @@ print( PyStr.count("Python") )
 #### problem 39
 # Q: write a program to reverse a string.
 # Method and Function: reversed(), str.join() 
-def string_reverse(PyStr):
+def string_reverse1(PyStr):
     return "".join(reversed(PyStr))
+
+def string_reverse2(PyStr):
+    return PyStr[::-1]
 
 # Test Case
 PyStr = "Learn Python the hard way."
-print( string_reverse(PyStr) )
+print( string_reverse1(PyStr) )
+print( string_reverse2(PyStr) )
 
 
 #### problem 40 
 # Q: write a program to reverse words in a sentence. 
 # Method and Function: str.split(), str.join(), reversed()
-def words_reverse(PyStr):
-    
+def words_reverse1(PyStr):
     # split the string into a list of words
     # reverse the list and then join words with " "
-    
     PyList = PyStr.split(" ")
     PyStr = " ".join(reversed(PyList))
     return PyStr
 
+def words_reverse2(PyStr):
+    PyList = PyStr.split(" ")[::-1]
+    PyStr = " ".join(PyList)
+    return PyStr
+    
 # Test Case
 PyStr = "Learn Python the hard way."
 print( words_reverse(PyStr) )
@@ -321,6 +416,16 @@ def chr_count(PyStr):
             print(character + str(PyStr.count(character)))
             
 chr_count(PyStr)
+
+def char_count(pystr):
+    # unique characters
+    uniq_char = list( set(pystr) )
+    uniq_cnt = [pystr.count(char) for char in uniq_char]
+    return dict( zip(uniq_char, uniq_cnt) )
+
+pystr = "learnpythonthehardway"
+print(char_count(pystr))
+    
     
     
 #### problem 44
@@ -333,11 +438,8 @@ for i in range(len(PyStr)):
 
 #### problem 45
 # Q: write a program to check whether a string contains all alphabetical letters
-# Method and Function: str.isalpha
-PyStr1 = "Learn Python the hard way."
-PyStr2 = "LearnPythonthehardway"
-print( PyStr1.isalpha() )
-print( PyStr2.isalpha() )
+# Method and Function: str.isalpha()
+
 
 #### problem 46
 # Q: write a program to convert a string into a list.
