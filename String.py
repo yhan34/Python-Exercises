@@ -6,15 +6,58 @@ Created on Sun Apr  8 20:00:06 2018
 @author: hanlucky
 """
 
-################# Python String ###################
+################# Python Functions ###################
+## len(str): calculate the length of a tring
+
+## zip(iterables)
+   The zip() function take iterables (can be zero or more), makes iterator that aggregates elements based on the iterables passed, and returns an iterator of tuples. 
+
+## set(iterables)
+   The set() constructor constructs a Python set with unique elements from the given iterable and returns it.
+
+################# Python String Methods ###################
 # successive concatenation 4*"xy"
 # indexing and slicing str[0:10:2]
-# len(str): calculate the length of a tring
-#### methods of string
-# str.replace(old, new): replace characters to other characters in a string
-# str.upper(): return the string in upper case
-# str.lower(): return the string in lower case
-# str.join(): combine a list of strings into a new single string
+
+## str.upper(), str.lower(), str.swapcase(): The upper/lower method returns the uppercased/lowercased string from the given string. 
+
+## str.isupper(), str.islower(), str.isalpha(), str.isnumeric(), str.alnum(), str.isdecimal(), str.isdigit(), str.istitle():
+#  returns True if all characters in the given string are uppercased, lowercased, alphabets, numeric, alphanumeric, decimal, digit, or titled.
+
+## str.count(substring, start, end)
+#  The count() method returns the number of occurances of a substring in the given string. 
+
+## str.split(separator [, maxsplit]), str.rsplit(separator [, maxsplit])
+#  The split()/rsplit() method breaks up a string from the left/right at the specified separator and returns a list of strings. 
+
+## str.partition(separator), str.rpartition(separator)
+#  The partition()/rpartition() method partition the given string at the first occurance of the separator from the left/right. 
+
+## str.join(iterable)
+#  The join() method concatenate the elements in the given iterables via the given string.
+
+## str.replace(old, new, count)
+#  The replace() method returns a copy of the string where all occurance of a substring is replaced with another substring. 
+
+################# Python List Methods ###################
+#  * modify the list
+
+## list.index(element)
+#  The index() method searches an element in the list and returns the index of its first occurance. 
+
+## list.append(item)*
+#  The append() method adds a single item to the existing list. It modifies the original list rather than returning a new list.
+
+## list.sort(key, reverse)* v.s. sorted()
+#  The sort() method sorts the elements of a given list based on the key in a specific order. It modifies the orginal list, 
+#  rather than returning a new list. An alternative to it is sorted() function, which returns a new list.
+
+## list.reverse()* v.s reversed()
+#  The reverse() method reverses the elements of a given list. It modifies the original list, rather than returning a new list. 
+#  An alternative to it is reversed() function, which returns a new list. 
+
+
+
 
 
 ##### problem 1
